@@ -21,9 +21,6 @@ const UploadFile = () => {
   // State for file upload...
   const [base64String, setBase64String] = useState<File | null>(null);
 
-  // Log the actual base64 data...
-  console.log(base64String);
-
   // File Change handler...
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files && e.target.files[0];
@@ -33,6 +30,8 @@ const UploadFile = () => {
   // Form submit handler...
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+  // Log the actual base64 data...
     if (base64String) {
       console.log(await base64(base64String));
     }
@@ -45,6 +44,45 @@ const UploadFile = () => {
         // Specify the file types...
         accept="image/jpeg,image/png,image/svg+xml,image/webp"
         onChange={handleFileChange}
+      />
+      <button type="submit">Upload</button>
+    </form>
+  );
+};
+
+export default UploadFile;
+  ```
+
+#### ✔ You can simplify the code like this way.
+ ```bash
+"use client";
+
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import { base64 } from "next-file-64ify";
+
+const UploadFile = () => {
+  // State for file upload...
+  const [base64String, setBase64String] = useState<File | null>(null);
+
+  // Form submit handler...
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Log the actual base64 data...
+    if (base64String) {
+      console.log(await base64(base64String));
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="file"
+        // Specify the file types...
+        accept="image/jpeg,image/png,image/svg+xml,image/webp"
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          e.target.files && setBase64String(e.target.files[0])
+        }
       />
       <button type="submit">Upload</button>
     </form>

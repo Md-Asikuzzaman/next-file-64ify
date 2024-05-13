@@ -1,0 +1,31 @@
+{
+  "name": "next-file-64ify",
+  "version": "1.0.0",
+  "description": "A package for handling base64 encoding and decoding in Next.js applications",
+  "type": "module",
+  "main": "./dist/script.js",
+  "types": "./dist/script.d.ts",
+  "scripts": {
+    "start": "tsc --watch"
+  },
+  "keywords": [
+    "base64",
+    "next.js",
+    "react.js",
+    "file handling"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Md-Asikuzzaman/next-file-64ify.git"
+  },
+  "author": "md asikuzzaman | email:mdasikuzzaman.en@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Md-Asikuzzaman/next-file-64ify/issues"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.11",
+    "typescript": "^5.4.5"
+  },
+  "homepage": "https://github.com/Md-Asikuzzaman/next-file-64ify#readme"
+}

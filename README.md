@@ -8,7 +8,7 @@ Intro: "Base64 encoding simplifies file handling by converting binary data, like
 ```
 #### ✔ After installation, verify the package.json file to confirm successful installation.
  ```bash
- "next-file-64ify": "^1.0.0",
+ "next-file-64ify": "^1.0.1",
   ```
 #### ✔ Here's a simple example of how to use this package with React.js or Next.js.
  ```bash

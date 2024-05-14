@@ -6,34 +6,45 @@ Intro: "Base64 encoding simplifies file handling by converting binary data, like
  ```bash
   npm i next-file-64ify
 ```
-#### ✔ After installation, verify the package.json file to confirm successful installation.
+#### ✔ After installation, verify the package file, and import the package.
+###### package.json
  ```bash
  "next-file-64ify": "^1.0.1",
   ```
+###### Page.tsx
+```bash
+import { _64ify } from "next-file-64ify";
+  ```
 #### ✔ Here's a simple example of how to use this package with React.js or Next.js.
  ```bash
- "use client";
+"use client";
 
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { base64 } from "next-file-64ify";
+import { _64ify } from "next-file-64ify";
 
-const UploadFile = () => {
-  // State for file upload...
-  const [base64String, setBase64String] = useState<File | null>(null);
+const Page = () => {
+  // File state
+  const [myFile, setMyFile] = useState<File | null>(null);
+
+  // Add specific file types here...
+  const allowedTypes = ["image/jpeg", "image/png"];
 
   // File Change handler...
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // The state talking the current file.
     const selectedFile = e.target.files && e.target.files[0];
-    setBase64String(selectedFile);
+    setMyFile(selectedFile);
   };
 
-  // Form submit handler...
+  // Form submit handler with... (async)
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-  // Log the actual base64 data...
-    if (base64String) {
-      console.log(await base64(base64String));
+    if (myFile) {
+      // Destructuring all value with... (await)
+      const { data, isLoading, isError } = await _64ify(myFile, allowedTypes);
+
+      console.log({ data, isLoading, isError }); // log all values.
     }
   };
 
@@ -41,8 +52,7 @@ const UploadFile = () => {
     <form onSubmit={handleSubmit}>
       <input
         type="file"
-        // Specify the file types...
-        accept="image/jpeg,image/png,image/svg+xml,image/webp"
+        accept="image/jpeg, image/png" // Add specific file types here also.
         onChange={handleFileChange}
       />
       <button type="submit">Upload</button>
@@ -50,27 +60,33 @@ const UploadFile = () => {
   );
 };
 
-export default UploadFile;
+export default Page;
+
   ```
 
 #### ✔ You can simplify the code like this way.
  ```bash
 "use client";
 
-import React, { useState, ChangeEvent, FormEvent } from "react";
-import { base64 } from "next-file-64ify";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { _64ify } from "next-file-64ify";
 
-const UploadFile = () => {
-  // State for file upload...
-  const [base64String, setBase64String] = useState<File | null>(null);
+const Page = () => {
+  // File state
+  const [myFile, setMyFile] = useState<File | null>(null);
 
-  // Form submit handler...
+  // Add specific file types here...
+  const allowedTypes = ["image/jpeg", "image/png"];
+
+  // Form submit handler with... (async)
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Log the actual base64 data...
-    if (base64String) {
-      console.log(await base64(base64String));
+    if (myFile) {
+      // Destructuring all value with... (await)
+      const { data, isLoading, isError } = await _64ify(myFile, allowedTypes);
+
+      console.log({ data, isLoading, isError }); // log all values.
     }
   };
 
@@ -78,17 +94,64 @@ const UploadFile = () => {
     <form onSubmit={handleSubmit}>
       <input
         type="file"
-        // Specify the file types...
-        accept="image/jpeg,image/png,image/svg+xml,image/webp"
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          e.target.files && setBase64String(e.target.files[0])
+        accept="image/jpeg, image/png" // Add specific file types here also.
+        onChange={
+          (e: ChangeEvent<HTMLInputElement>) =>
+            e.target.files && setMyFile(e.target.files[0]) // The state talking the current file.
         }
       />
-      <button type="submit">Upload</button>
+      <button type="submit">Upload File</button>
     </form>
   );
 };
 
-export default UploadFile;
+export default Page;
 
   ```
+
+#### ✔ Follow the guide to set specific file type.
+```bash
+// Add specific file types inside the array (for package)
+const allowedTypes = ["image/jpeg", "image/png", "image/svg+xml", ...];
+  ```
+
+```bash
+// Add specific file types here (for browser)
+accept="image/jpeg, image/png, image/svg+xml, ..."
+  ```
+
+#### ✔ Most commonly used file types.
+```bash
+// Copy and paste what you need
+{
+  "image/jpeg",
+  "image/png",
+  "image/svg+xml",
+  "image/gif",
+  "image/webp",
+  "image/bmp",
+  "image/tiff",
+  "image/x-icon",
+  "image/vnd.microsoft.icon",
+  "image/vnd.wap.wbmp",
+  "image/heic",
+  "image/heif",
+  "image/jxr",
+}
+  ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

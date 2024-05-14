@@ -7,19 +7,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const base64 = (file) => __awaiter(void 0, void 0, void 0, function* () {
-    const validateFileType = (selectedFile) => {
-        const allowedTypes = ["image/jpeg", "image/png"];
-        return allowedTypes.includes(selectedFile.type);
+export const _64ify = (file, fileType) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = {
+        data: null,
+        isLoading: true,
+        isError: false,
     };
-    if (validateFileType(file)) {
-        const base64 = yield convertToBase64(file);
-        return base64;
+    try {
+        const validateFileType = (selectedFile) => {
+            const allowedTypes = [...fileType];
+            return allowedTypes.includes(selectedFile.type);
+        };
+        if (validateFileType(file)) {
+            result.isLoading = true;
+            const base64 = yield convertToBase64(file);
+            result.isLoading = false;
+            result.data = base64;
+            result.isError = false;
+        }
+        else {
+            result.data = null;
+            result.isLoading = false;
+            result.isError = true;
+        }
     }
-    else {
-        alert("Please select a valid JPG or PNG file.");
-        return null;
+    catch (error) {
+        result.data = null;
+        result.isLoading = false;
+        result.isError = true;
     }
+    return result;
 });
 const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {

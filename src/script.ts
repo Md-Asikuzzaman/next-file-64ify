@@ -1,16 +1,43 @@
-export const base64 = async (file: File): Promise<string | null> => {
-  const validateFileType = (selectedFile: File): boolean => {
-    const allowedTypes = ["image/jpeg", "image/png"];
-    return allowedTypes.includes(selectedFile.type);
+export interface Base64Type {
+  data?: string | null;
+  isLoading: boolean;
+  isError: boolean;
+}
+
+export const _64ify = async (
+  file: File,
+  fileType: string[]
+): Promise<Base64Type> => {
+  const result: Base64Type = {
+    data: null,
+    isLoading: true,
+    isError: false,
   };
 
-  if (validateFileType(file)) {
-    const base64 = await convertToBase64(file);
-    return base64;
-  } else {
-    alert("Please select a valid JPG or PNG file.");
-    return null;
+  try {
+    const validateFileType = (selectedFile: File): boolean => {
+      const allowedTypes = [...fileType];
+      return allowedTypes.includes(selectedFile.type);
+    };
+
+    if (validateFileType(file)) {
+      result.isLoading = true;
+      const base64 = await convertToBase64(file);
+      result.isLoading = false;
+      result.data = base64;
+      result.isError = false;
+    } else {
+      result.data = null;
+      result.isLoading = false;
+      result.isError = true;
+    }
+  } catch (error) {
+    result.data = null;
+    result.isLoading = false;
+    result.isError = true;
   }
+
+  return result;
 };
 
 const convertToBase64 = (file: File): Promise<string> => {

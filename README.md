@@ -9,7 +9,7 @@ Intro: "Base64 encoding simplifies file handling by converting binary data, like
 #### ✔ After installation, verify the package file, and import the package.
 ###### package.json
  ```bash
- "next-file-64ify": "^2.0.0",
+ "next-file-64ify": "^2.1.0",
   ```
 ###### Page.tsx
 ```bash
@@ -29,6 +29,9 @@ const Page = () => {
   // Add specific file types here...
   const allowedTypes = ["image/jpeg", "image/png"];
 
+  // Add specific file size here...
+  const allowedFileSize = { minSize: 0, maxSize: 1024 }; // Use size in KB.
+
   // File Change handler...
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     // The state talking the current file.
@@ -42,9 +45,9 @@ const Page = () => {
 
     if (myFile) {
       // Destructuring all value with... (await)
-      const { data, isLoading, isError } = await _64ify(myFile, allowedTypes);
+      const { data, isLoading, isError, isValidSize } = await _64ify(myFile, allowedTypes, allowedFileSize);
 
-      console.log({ data, isLoading, isError }); // log all values.
+      console.log({ data, isLoading, isError, isValidSize }); // log all values.
     }
   };
 
@@ -78,15 +81,18 @@ const Page = () => {
   // Add specific file types here...
   const allowedTypes = ["image/jpeg", "image/png"];
 
+  // Add specific file size here...
+  const allowedFileSize = { minSize: 0, maxSize: 1024 }; // Use size in KB.
+
   // Form submit handler with... (async)
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (myFile) {
       // Destructuring all value with... (await)
-      const { data, isLoading, isError } = await _64ify(myFile, allowedTypes);
+      const { data, isLoading, isError, isValidSize } = await _64ify(myFile, allowedTypes, allowedFileSize);
 
-      console.log({ data, isLoading, isError }); // log all values.
+      console.log({ data, isLoading, isError, isValidSize }); // log all values.
     }
   };
 
@@ -97,7 +103,7 @@ const Page = () => {
         accept="image/jpeg, image/png" // Add specific file types here also.
         onChange={
           (e: ChangeEvent<HTMLInputElement>) =>
-            e.target.files && setMyFile(e.target.files[0]) // The state talking the current file.
+            e.target.files && setMyFile(e.target.files[0]) // Pass the current file.
         }
       />
       <button type="submit">Upload File</button>
@@ -109,7 +115,14 @@ export default Page;
 
   ```
 
-#### ✔ Follow the guide to set specific file type.
+#### ✔ Follow the guide to set specific file (Size).
+```bash
+  // Set your own recommended file size
+  const allowedFileSize = { minSize: 1024, maxSize: 5120 }; // Size used in KB.
+  const allowedFileSize = { minSize: 1024 * 2, maxSize: 1024 * 5 }; // Size used in MB.
+  ```
+
+#### ✔ Follow the guide to set specific file (Type).
 ```bash
 // Add specific file types inside the array (for package)
 const allowedTypes = ["image/jpeg", "image/png", "image/svg+xml", ...];
@@ -117,7 +130,7 @@ const allowedTypes = ["image/jpeg", "image/png", "image/svg+xml", ...];
 
 ```bash
 // Add specific file types here (for browser)
-accept="image/jpeg, image/png, image/svg+xml, ..."
+<input type="file" accept="image/jpeg, image/png, image/svg+xml, ..."/>
   ```
 
 #### ✔ Most commonly used file types.

@@ -7,37 +7,48 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-export const _64ify = (file, fileType) => __awaiter(void 0, void 0, void 0, function* () {
+// _64ify...
+export const _64ify = (file_1, fileType_1, _a) => __awaiter(void 0, [file_1, fileType_1, _a], void 0, function* (file, fileType, { minSize, maxSize }) {
     const result = {
         data: null,
         isLoading: true,
         isError: false,
+        isValidSize: false,
     };
     try {
         const validateFileType = (selectedFile) => {
             const allowedTypes = [...fileType];
             return allowedTypes.includes(selectedFile.type);
         };
-        if (validateFileType(file)) {
+        const validateFileSize = (selectedFile) => {
+            const fileSize = selectedFile.size / 1024; // Convert file size to kilobytes
+            return fileSize >= minSize && fileSize <= maxSize;
+        };
+        // Validation logic
+        if (validateFileType(file) && validateFileSize(file)) {
             result.isLoading = true;
             const base64 = yield convertToBase64(file);
             result.isLoading = false;
             result.data = base64;
+            result.isValidSize = true;
             result.isError = false;
         }
         else {
             result.data = null;
             result.isLoading = false;
+            result.isValidSize = false;
             result.isError = true;
         }
     }
     catch (error) {
         result.data = null;
         result.isLoading = false;
+        result.isValidSize = false;
         result.isError = true;
     }
     return result;
 });
+// Convert file into base64 string
 const convertToBase64 = (file) => {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();

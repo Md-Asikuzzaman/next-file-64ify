@@ -4,16 +4,16 @@ Intro: "Base64 encoding simplifies file handling by converting binary data, like
 ## Installation:
 ##### With NPM
  ```bash
-  npm i next-file-64ify
+ npm i next-file-64ify
 ```
 #### ✔ After installation, verify the package file, and import the package.
 ###### package.json
  ```bash
- "next-file-64ify": "^2.1.2",
+ "next-file-64ify": "^2.1.3",
   ```
 ###### Page.tsx
 ```bash
-import { _64ify } from "next-file-64ify";
+ import { _64ify } from "next-file-64ify";
   ```
 #### ✔ Here's a simple example of how to use this package with React.js or Next.js.
  ```bash

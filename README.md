@@ -34,9 +34,9 @@ const Page = () => {
 
   // File Change handler...
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // The state talking the current file.
-    const selectedFile = e.target.files && e.target.files[0];
-    setMyFile(selectedFile);
+  // The state talking the current file.
+  const selectedFile = e.target.files && e.target.files[0];
+  setMyFile(selectedFile);
   };
 
   // Form submit handler with... (async)
@@ -117,9 +117,9 @@ export default Page;
 
 #### ✔ Follow the guide to set specific file (Size).
 ```bash
-  // Set your own recommended file size
-  const allowedFileSize = { minSize: 1024, maxSize: 5120 }; // Size used in KB.
-  const allowedFileSize = { minSize: 1024 * 2, maxSize: 1024 * 5 }; // Size used in MB.
+// Set your own recommended file size
+const allowedFileSize = { minSize: 1024, maxSize: 5120 }; // Size used in KB.
+const allowedFileSize = { minSize: 1024 * 2, maxSize: 1024 * 5 }; // Size used in MB.
   ```
 
 #### ✔ Follow the guide to set specific file (Type).

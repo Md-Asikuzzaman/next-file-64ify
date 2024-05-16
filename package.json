@@ -2,11 +2,12 @@
   "name": "next-file-64ify",
   "version": "2.1.2",
   "description": "A package for handling base64 encoding and decoding in Next.js applications",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "type": "module",
-  "main": "./dist/script.js",
-  "types": "./dist/script.d.ts",
   "scripts": {
-    "start": "tsc --watch"
+    "dev": "tsup --watch",
+    "build": "tsup"
   },
   "keywords": [
     "base64ify",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.11",
+    "tsup": "^8.0.2",
     "typescript": "^5.4.5"
   },
   "homepage": "https://github.com/Md-Asikuzzaman/next-file-64ify#readme"

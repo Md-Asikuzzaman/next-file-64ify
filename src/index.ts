@@ -21,6 +21,7 @@ export const _64ify = async (
   try {
     const validateFileType = (selectedFile: File): boolean => {
       const allowedTypes = [...fileType];
+
       return allowedTypes.includes(selectedFile.type);
     };
 

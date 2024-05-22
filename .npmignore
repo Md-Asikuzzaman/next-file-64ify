@@ -1,7 +1,6 @@
 node_modules
 src
-LICENSE
 package-lock.json
 README.md
 tsconfig.json
-tsup.config.json
+tsup.config.ts

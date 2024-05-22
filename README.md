@@ -9,7 +9,7 @@ Intro: "Base64 encoding simplifies file handling by converting binary data, like
 #### ✔ After installation, verify the package file, and import the package.
 ###### package.json
  ```bash
- "next-file-64ify": "^2.1.3",
+ "next-file-64ify": "^2.1.4",
   ```
 ###### Page.tsx
 ```bash

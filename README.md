@@ -64,7 +64,6 @@ const Page = () => {
 };
 
 export default Page;
-
   ```
 
 #### ✔ You can simplify the code like this way.

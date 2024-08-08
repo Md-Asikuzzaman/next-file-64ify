@@ -3,7 +3,8 @@ The **"next-file-64ify"** package simplifies file handling in **Next.js/React.js
 
 ## Installation:
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Md-Asikuzzaman/next-file-64ify)
- ```npm i next-file-64ify
+ ```bash
+npm i next-file-64ify
 # or
 yarn add next-file-64ify
 # or

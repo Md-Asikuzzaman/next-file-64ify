@@ -2,8 +2,8 @@
 The **"next-file-64ify"** package simplifies file handling in **Next.js/React.js** applications by converting selected files to **base64** strings. It provides easy-to-use functions for validating file types and sizes, ensuring smooth and efficient file uploads. It is ideal for image files and integrates seamlessly with React components for streamlined file management.
 
 ## Installation:
- ```
-npm i next-file-64ify
+![GitHub package.json version](https://img.shields.io/github/package-json/v/Md-Asikuzzaman/next-file-64ify)
+ ```npm i next-file-64ify
 # or
 yarn add next-file-64ify
 # or

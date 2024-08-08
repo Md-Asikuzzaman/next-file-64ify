@@ -18,13 +18,13 @@ import { useState, useRef } from "react";
 import { _64ify } from "next-file-64ify"; // Import _64ify package
 
 const MyFile = () => {
-  const [myFile, setMyFile] = useState<File | null>(null); // State to store the selected file
-  const inputRef = useRef<HTMLInputElement>(null); // Ref to directly access the file input element
+  const [myFile, setMyFile] = useState<File | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Function to handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent default form behavior
-
+    e.preventDefault();
+    
     if (myFile) {
       try {
         const { data, isLoading, isError, isValidSize } = await _64ify(myFile, {
@@ -56,8 +56,8 @@ const MyFile = () => {
         accept="image/jpeg, image/png" // Restrict file selection
         onChange={
           (e: React.ChangeEvent<HTMLInputElement>) =>
-            e.target.files && setMyFile(e.target.files[0]) // Update state with selected file
-        }
+            e.target.files && setMyFile(e.target.files[0])
+        } // Update state with selected file
       />
       <button type="submit">Upload File</button>
     </form>

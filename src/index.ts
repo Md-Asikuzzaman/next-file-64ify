@@ -5,11 +5,29 @@ export interface Base64Type {
   isValidSize: boolean;
 }
 
-// _64ify...
+export interface AllowSizes {
+  maxSize: number; // in kilobytes
+  minSize: number; // in kilobytes
+}
+
+interface _64ifyOptions {
+  allowedTypes: string[];
+  allowedSizes: AllowSizes; // required, no defaults
+}
+
+// Convert file into base64 string
+const convertToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+  });
+};
+
 export const _64ify = async (
   file: File,
-  fileType: string[],
-  { minSize, maxSize }: { minSize: number; maxSize: number }
+  { allowedTypes, allowedSizes }: _64ifyOptions
 ): Promise<Base64Type> => {
   const result: Base64Type = {
     data: null,
@@ -18,51 +36,25 @@ export const _64ify = async (
     isValidSize: false,
   };
 
-  try {
-    const validateFileType = (selectedFile: File): boolean => {
-      const allowedTypes = [...fileType];
+  // Validate file type
+  const isValidFileType = allowedTypes.includes(file.type);
 
-      return allowedTypes.includes(selectedFile.type);
-    };
+  // Validate file size
+  const fileSizeKB = file.size / 1024; // Convert size to kilobytes
+  const isValidFileSize =
+    fileSizeKB >= allowedSizes.minSize && fileSizeKB <= allowedSizes.maxSize;
 
-    const validateFileSize = (selectedFile: File): boolean => {
-      const fileSize = selectedFile.size / 1024; // Convert file size to kilobytes
-      return fileSize >= minSize && fileSize <= maxSize;
-    };
-
-    // Validation logic
-    if (validateFileType(file) && validateFileSize(file)) {
-      result.isLoading = true;
-      const base64 = await convertToBase64(file);
-      result.isLoading = false;
-      result.data = base64;
+  if (isValidFileType && isValidFileSize) {
+    try {
+      result.data = await convertToBase64(file);
       result.isValidSize = true;
-      result.isError = false;
-    } else {
-      result.data = null;
-      result.isLoading = false;
-      result.isValidSize = false;
+    } catch {
       result.isError = true;
     }
-  } catch (error) {
-    result.data = null;
-    result.isLoading = false;
-    result.isValidSize = false;
+  } else {
     result.isError = true;
   }
 
+  result.isLoading = false;
   return result;
-};
-
-// Convert file into base64 string
-const convertToBase64 = (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64String = reader.result as string;
-      resolve(base64String);
-    };
-    reader.onerror = (error) => reject(error);
-  });
 };

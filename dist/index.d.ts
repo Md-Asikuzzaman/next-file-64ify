@@ -4,7 +4,7 @@ interface Base64Type {
     isError: boolean;
     isValidSize: boolean;
 }
-declare const _64ify: (file: File, fileType: string[], { minSize, maxSize }: {
+declare const _64ify: (file: File, allowedFileTypes: string[], { minSize, maxSize }: {
     minSize: number;
     maxSize: number;
 }) => Promise<Base64Type>;

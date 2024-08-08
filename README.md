@@ -11,7 +11,7 @@ yarn add next-file-64ify
 pnpm i next-file-64ify
 ```
 #### ✔ Simply connect with your Next.js or React.js application 🤝.
- ```bash
+ ```js
 "use client";
 
 import { useState, useRef } from "react";
@@ -69,7 +69,7 @@ export default MyFile;
 
 
 #### ✔ Follow the guide to set a specific file (Sizes).
-```bash
+```js
 const { data, isLoading, isError, isValidSize } = await _64ify(myFile, {
  allowedSizes: {
   minSize: 1024, // file size in KB
@@ -88,12 +88,12 @@ const { data, isLoading, isError, isValidSize } = await _64ify(myFile, {
 ```
 
 #### ✔ 2. Add specific file types here (for the browser)
-```bash
+```js
 <input type="file" accept="image/jpeg, image/png, "image/webp", ..."/>
   ```
 
 #### ✔ Most commonly used file types.
-```bash
+```js
 // Copy and paste what you need 😊
 {
   "image/jpeg",

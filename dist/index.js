@@ -1,3 +1,3 @@
-var l=r=>new Promise((s,a)=>{let e=new FileReader;e.readAsDataURL(r),e.onload=()=>s(e.result),e.onerror=a;}),d=async(r,s,{minSize:a,maxSize:e})=>{let i={data:null,isLoading:!0,isError:!1,isValidSize:!1},o=s.includes(r.type),n=r.size/1024,t=n>=a&&n<=e;if(o&&t)try{i.data=await l(r),i.isValidSize=!0;}catch{i.isError=!0;}else i.isError=!0;return i.isLoading=!1,i};
+var t=i=>new Promise((s,r)=>{let e=new FileReader;e.readAsDataURL(i),e.onload=()=>s(e.result),e.onerror=r;}),l=async(i,{allowedTypes:s,allowedSizes:r})=>{let e={data:null,isLoading:!0,isError:!1,isValidSize:!1},n=s.includes(i.type),a=i.size/1024,o=a>=r.minSize&&a<=r.maxSize;if(n&&o)try{e.data=await t(i),e.isValidSize=!0;}catch{e.isError=!0;}else e.isError=!0;return e.isLoading=!1,e};
 
-export { d as _64ify };
+export { l as _64ify };

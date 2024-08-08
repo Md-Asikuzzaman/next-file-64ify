@@ -4,9 +4,14 @@ interface Base64Type {
     isError: boolean;
     isValidSize: boolean;
 }
-declare const _64ify: (file: File, allowedFileTypes: string[], { minSize, maxSize }: {
-    minSize: number;
+interface AllowSizes {
     maxSize: number;
-}) => Promise<Base64Type>;
+    minSize: number;
+}
+interface _64ifyOptions {
+    allowedTypes: string[];
+    allowedSizes: AllowSizes;
+}
+declare const _64ify: (file: File, { allowedTypes, allowedSizes }: _64ifyOptions) => Promise<Base64Type>;
 
-export { type Base64Type, _64ify };
+export { type AllowSizes, type Base64Type, _64ify };

@@ -1,6 +1,6 @@
 {
   "name": "next-file-64ify",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "A package for handling base64 encoding and decoding in Next.js applications",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

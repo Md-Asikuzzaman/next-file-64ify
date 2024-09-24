@@ -10,41 +10,34 @@ yarn add next-file-64ify
 # or
 pnpm i next-file-64ify
 ```
+## Quick Start:
 #### ✔ Simply connect with your Next.js or React.js application 🤝.
  ```js
 "use client";
 
-import { useState, useRef } from "react";
-import { _64ify } from "next-file-64ify"; // Import _64ify package
+import React, { useState } from "react";
+import { _64ify } from "next-file-64ify";
 
-const MyFile = () => {
+const MyFileUpload = () => {
   const [myFile, setMyFile] = useState<File | null>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Function to handle form submission
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (myFile) {
-      try {
-        const { data, isLoading, isError, isValidSize } = await _64ify(myFile, {
-          allowedSizes: {
-            minSize: 10, // file size in KB
-            maxSize: 1024 * 2, // file size in MB
-          },
-          allowedTypes: ["image/jpeg", "image/png"], // Allowed file types
-        });
+      const { data, isLoading, isError, isValidSize } = await _64ify(myFile, {
+        allowedSizes: {
+          minSize: 10,
+          maxSize: 2048,
+        },
+        allowedTypes: ["image/jpeg", "image/png"],
+      });
+      console.log({ data, isLoading, isError, isValidSize });
+    }
+  };
 
-        console.log({ data, isLoading, isError, isValidSize }); // Log results
-
-        // Reset file input field and state
-        if (inputRef.current) {
-          inputRef.current.value = "";
-          setMyFile(null);
-        }
-      } catch (error: unknown) {
-        console.error("Error processing file:", error); // Log any errors
-      }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setMyFile(e.target.files[0]);
     }
   };
 
@@ -52,23 +45,20 @@ const MyFile = () => {
     <form onSubmit={handleSubmit}>
       <input
         type="file"
-        ref={inputRef} // Reference to file input element
-        accept="image/jpeg, image/png" // Restrict file selection
-        onChange={
-          (e: React.ChangeEvent<HTMLInputElement>) =>
-            e.target.files && setMyFile(e.target.files[0])
-        } // Update state with selected file
+        accept="image/jpeg, image/png"
+        onChange={handleChange}
       />
       <button type="submit">Upload File</button>
     </form>
   );
 };
 
-export default MyFile;
+export default MyFileUpload;
 ```
 
+## Customizing File Types and Sizes:
+#### ✔ 1. Set File Size Limits
 
-#### ✔ Follow the guide to set a specific file (Sizes).
 ```js
 const { data, isLoading, isError, isValidSize } = await _64ify(myFile, {
  allowedSizes: {
@@ -79,15 +69,15 @@ const { data, isLoading, isError, isValidSize } = await _64ify(myFile, {
 });
 ```
 
-#### ✔ 1. Add specific file types inside the array (for the package)
-```bash
+#### ✔ 2. Add More Allowed File Types (for the package)
+```js
 const { data, isLoading, isError, isValidSize } = await _64ify(myFile, {
  allowedTypes: ["image/jpeg", "image/png", "image/webp"],
  ...
 });
 ```
 
-#### ✔ 2. Add specific file types here (for the browser)
+#### ✔ 3. Update File Input to Accept More Types (for the browser)
 ```js
 <input type="file" accept="image/jpeg, image/png, "image/webp", ..."/>
   ```
@@ -111,19 +101,3 @@ const { data, isLoading, isError, isValidSize } = await _64ify(myFile, {
   "image/jxr",
 }
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
